@@ -7,19 +7,16 @@ const taskRoutes = require("./routes/taskRoutes");
 const cors = require("cors");
 
 const app = express();
-// console.log(app);
 
-//midleware // https://expressjs.com/en/guide/using-middleware.html
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-app.use(cors()); // npm i cors
+app.use(
+  cors({
+    origin: ["http://localhost:3000", "https://mern-task-logger.onrender.com"],
+  })
+);
 
-// app.use(taskRoutes);
 app.use("/api/tasks", taskRoutes);
-// const logger = (req, res, next)=>{
-// console.log("Middleware ran");
-// next();
-// }
 
 if (process.env.NODE_ENV === "production") {
   app.use(express.static(path.join(__dirname, "../frontend/build")));
@@ -34,16 +31,10 @@ if (process.env.NODE_ENV === "production") {
   });
 }
 
-Routes
+Routes;
 app.get("/", (req, res) => {
   res.send("Home Page");
 });
-
-connectDB();
-// const PORT = process.env.PORT || 5000;
-// app.listen(PORT, () => {
-//   console.log(`Server running on port ${PORT}`);
-// });
 
 const PORT = process.env.PORT || 5000;
 mongoose
